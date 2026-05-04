@@ -37,7 +37,7 @@ function App() {
   const openArticle = async (article) => {
     setArticleLoading(true);
     setSelectedArticle({ ...article, isFetching: true });
-    
+
     try {
       const response = await axios.get(`${API_BASE}/article`, {
         params: { url: article.link }
@@ -47,7 +47,7 @@ function App() {
       console.error('Article fetch error:', error);
       setSelectedArticle({
         ...article,
-        content: '<p>Failed to load full article content. You can read it directly at the source site.</p>'
+        content: '<p>Failed to load full article content. done You can read it directly at the source site.</p>'
       });
     } finally {
       setArticleLoading(false);
@@ -73,9 +73,9 @@ function App() {
       </header>
 
       <form className="search-wrapper" onSubmit={handleSearch}>
-        <input 
-          className="search-input" 
-          placeholder="Search for news by keyword (e.g. cricket, AI, startups)..." 
+        <input
+          className="search-input"
+          placeholder="Search for news by keyword (e.g. cricket, AI, startups)..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
@@ -92,14 +92,14 @@ function App() {
         </div>
       ) : (
         <>
-          <motion.div 
+          <motion.div
             className="news-grid"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
             {news.map((item, idx) => (
-              <motion.div 
+              <motion.div
                 key={item.id}
                 className="news-card"
                 onClick={() => openArticle(item)}
@@ -123,16 +123,16 @@ function App() {
           </motion.div>
 
           <div className="pagination">
-            <button 
-              className="page-btn" 
+            <button
+              className="page-btn"
               onClick={() => handleSearch(null, query || 'World News', page - 1)}
               disabled={page === 1}
             >
               <ChevronLeft size={18} />
             </button>
             <span className="page-num">Page {page}</span>
-            <button 
-              className="page-btn" 
+            <button
+              className="page-btn"
               onClick={() => handleSearch(null, query || 'World News', page + 1)}
               disabled={news.length < 20}
             >
@@ -145,14 +145,14 @@ function App() {
       {/* Article Detail Modal */}
       <AnimatePresence>
         {selectedArticle && (
-          <motion.div 
+          <motion.div
             className="modal-overlay"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={closeArticle}
           >
-            <motion.div 
+            <motion.div
               className="modal-content"
               onClick={(e) => e.stopPropagation()}
               initial={{ scale: 0.9, opacity: 0 }}
@@ -166,7 +166,7 @@ function App() {
               {(selectedArticle.image || selectedArticle.thumbnail) && (
                 <img src={selectedArticle.image || selectedArticle.thumbnail} alt={selectedArticle.title} className="article-hero" />
               )}
-              
+
               <div className="article-body">
                 {selectedArticle.siteName && (
                   <span className="news-source">{selectedArticle.siteName}</span>
@@ -177,7 +177,7 @@ function App() {
                     By {selectedArticle.byline}
                   </p>
                 )}
-                
+
                 {articleLoading ? (
                   <div className="loading-indicator">
                     <Loader2 size={40} className="spinner" />
@@ -187,9 +187,9 @@ function App() {
                   <div className="article-text">
                     <div dangerouslySetInnerHTML={{ __html: selectedArticle.content }} />
                     <div style={{ marginTop: '2rem', borderTop: '1px solid #eee', paddingTop: '1.5rem' }}>
-                      <a 
-                        href={selectedArticle.sourceUrl} 
-                        target="_blank" 
+                      <a
+                        href={selectedArticle.sourceUrl}
+                        target="_blank"
                         rel="noopener noreferrer"
                         className="search-button"
                         style={{ display: 'inline-flex' }}
